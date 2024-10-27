@@ -4,3 +4,6 @@
 /api/properties
 /api/bin
 /api/migrations
+
+/frontend/node_modules
+/frontend/Readme.md

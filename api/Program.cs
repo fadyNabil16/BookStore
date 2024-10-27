@@ -1,5 +1,8 @@
 using api.Data;
+using api.Interfaces;
 using api.Models;
+using api.Repositories;
+using api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -23,14 +26,17 @@ builder.Services.AddDbContext<StoreDbContext>(options => {
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+builder.Services.AddScoped<IBookRepository, BookRepository>();
+builder.Services.AddScoped<ITockenServices, TokenServices>();
 
-builder.Services.AddIdentity<Customer, IdentityRole>(options =>
+
+builder.Services.AddIdentity<User, IdentityRole>(options =>
 {
-    options.Password.RequireDigit = true;
-    options.Password.RequireLowercase = true;
-    options.Password.RequireUppercase = true;
-    options.Password.RequireNonAlphanumeric = true;
-    options.Password.RequiredLength = 12;
+    options.Password.RequireDigit = false;
+    // options.Password.RequireLowercase = true;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    // options.Password.RequiredLength = 12;
 })
 .AddEntityFrameworkStores<StoreDbContext>();
 
@@ -56,6 +62,7 @@ builder.Services.AddAuthentication(options =>
         )
     };
 });
+
 
 var app = builder.Build();
 

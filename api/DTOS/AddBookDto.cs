@@ -1,25 +1,23 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
-namespace api.Models
+namespace api.DTOS
 {
-    [Table("Books")]
-    public class Book
+    public class AddBookDto
     {
-        public int BookId { get; set; }
         [Required]
+        [MaxLength(20)]
         public string ISBN { get; set; }
 
         [Required]
+        [MaxLength(50)]
         public string Title { get; set; }
-
+        [DisplayFormat(ApplyFormatInEditMode =true, DataFormatString ="{dd/MM/yyyy}")]
         public DateTime? PublicationDate { get; set; } = null;
-
+        [Range(1,50)]
         public int? Edition { get; set; } = null; 
         [Required]
         [Range(0,200)]

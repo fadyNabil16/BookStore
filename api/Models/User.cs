@@ -8,24 +8,19 @@ using Microsoft.AspNetCore.Identity;
 
 namespace api.Models
 {
-    [Table("Customers")]
-    public class Customer : IdentityUser
+    [Table("Users")]
+    public class User : IdentityUser
     {
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
 
-        [MaxLength(6, ErrorMessage ="Max postal code length is 6 chars")]
-        public string PostalCode { get; set; }
-        [MaxLength(5)]
-        public string BuildingNo { get; set; }
+        public string PostalCode { get; set; } = string.Empty;
+        public string BuildingNo { get; set; } = string.Empty;
 
-        [Required]
-        public string Street { get; set; }
-        [MaxLength(5)]
-        public string? FlatNo { get; set; } = "0";
-        [MaxLength(30)]
-        public string City { get; set; }
+        public string Street { get; set; } = string.Empty;
+        public string FlatNo { get; set; } = string.Empty;
+        public string City { get; set; }= string.Empty;
 
         // For Many to ManY Relationship
         public List<CustomersDiscount> CustomerDiscount { get; set; } = new List<CustomersDiscount>();

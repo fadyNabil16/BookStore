@@ -13,7 +13,7 @@ namespace api.Models
 
         public int DiscountId { get; set; }
 
-        public Customer Customer { get; set; }
+        public User Customer { get; set; }
 
         public Discount Discount { get; set; }
 

@@ -1,0 +1,5 @@
+.vscode
+/api/BookStore.db
+/api/obj
+/api/properties
+/api/bin

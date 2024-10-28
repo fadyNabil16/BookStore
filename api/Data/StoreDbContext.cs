@@ -13,7 +13,7 @@ namespace api.Data
 {
     public class StoreDbContext : IdentityDbContext<User>
     {
-        public StoreDbContext(DbContextOptions dbContextOptions):base(dbContextOptions)
+        public StoreDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
         {
         }
 
@@ -22,35 +22,51 @@ namespace api.Data
         public DbSet<Book> Books { get; set; }
         public DbSet<CustomersDiscount> CustomersDiscounts { get; set; }
         public DbSet<Discount> Discounts { get; set; }
-        
-         protected override void OnModelCreating(ModelBuilder builder)
+
+        protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<User>().HasIndex(b => b.PhoneNumber).IsUnique();
+            builder.Entity<User>(x => x.HasIndex(b => b.PhoneNumber).IsUnique());
 
-            builder.Entity<CustomersDiscount>(x => x.HasKey(CD => new {CD.CustomerId, CD.DiscountId}));
+
+            // =================== Register Many to Many Customer and Discount ============ //
+            builder.Entity<CustomersDiscount>(x => x.HasKey(CD => new { CD.CustomerId, CD.DiscountId }));
 
             builder.Entity<CustomersDiscount>().HasOne(c => c.Customer).WithMany(c => c.CustomerDiscount).HasForeignKey(cd => cd.CustomerId);
 
             builder.Entity<CustomersDiscount>().HasOne(d => d.Discount).WithMany(d => d.CustomersDiscount).HasForeignKey(cd => cd.DiscountId);
 
-            // ++++++++++Adding Role to USerIdentity++++++++++++++++//
-            List<IdentityRole> roles = new List<IdentityRole> 
+            // =================== Register Many to Many Books And Authors ============ //            
+
+            builder.Entity<BooksAuthorPool>(BAP => BAP.HasKey(BAP => new { BAP.AuthorId, BAP.BookId }));
+
+            builder.Entity<BooksAuthorPool>().HasOne(b => b.Book).WithMany(bap => bap.BooksAuthorPool).HasForeignKey(bap => bap.AuthorId);
+
+            builder.Entity<BooksAuthorPool>().HasOne(a => a.Author).WithMany(bap => bap.BooksAuthorPool).HasForeignKey(bap => bap.BookId);
+
+
+            // ================= Adding Role to USerIdentity =================//
+            List<IdentityRole> roles = new List<IdentityRole>
             {
-                new IdentityRole 
+                new IdentityRole
                 {
                     Name = "Customer",
                     NormalizedName= "CUSTOMER"
                 },
-                new IdentityRole 
+                new IdentityRole
                 {
                     Name= "Admin",
                     NormalizedName= "ADMIN"
+                },
+                new IdentityRole
+                {
+                    Name = "Shipper",
+                    NormalizedName = "SHIPPER"
                 }
             };
             builder.Entity<IdentityRole>().HasData(roles);
         }
-         
+
     }
 }

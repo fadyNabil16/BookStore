@@ -10,6 +10,7 @@ namespace api.Models
     [Table("Discounts")]
     public class Discount
     {
+        [Key]
         [Required]
         public int DiscountId { get; set; }
         [Required]

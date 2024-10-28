@@ -20,9 +20,10 @@ namespace api.Models
 
         public string Street { get; set; } = string.Empty;
         public string FlatNo { get; set; } = string.Empty;
-        public string City { get; set; }= string.Empty;
+        public string City { get; set; } = string.Empty;
 
         // For Many to ManY Relationship
         public List<CustomersDiscount> CustomerDiscount { get; set; } = new List<CustomersDiscount>();
+
     }
 }

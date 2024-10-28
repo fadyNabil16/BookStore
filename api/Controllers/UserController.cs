@@ -23,13 +23,15 @@ namespace api.Controllers
         private readonly StoreDbContext _context;
         private readonly UserManager<User> _userManager;
         private readonly ITockenServices _tokenServices;
+        private readonly SignInManager<User> _signInManager;
         public UserController(StoreDbContext context, UserManager<User> userManager,
-            ITockenServices tokenServices
+            ITockenServices tokenServices, SignInManager<User> signInManager
         )
         {
             _context = context;
             _userManager = userManager;
             _tokenServices = tokenServices;
+            _signInManager = signInManager;
         }
 
         [HttpPost("register")]
@@ -39,7 +41,7 @@ namespace api.Controllers
             if(!(_registerBefore == null))
             {
                 // Already signed up before
-                return StatusCode(500, "step one");
+                return BadRequest("User Already Register");
             }
             User _user = new User
             {
@@ -71,5 +73,26 @@ namespace api.Controllers
             );
         }
 
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginUserDto loginUserDto)
+        {
+            var result = await _userManager.Users.FirstOrDefaultAsync(u => u.Email == loginUserDto.Email);
+            if(result == null)
+                return BadRequest("Register First!");
+            
+            var loginResult = await _signInManager.CheckPasswordSignInAsync(result, loginUserDto.password, false);
+            if (!loginResult.Succeeded) return Unauthorized("Username not found and/or password incorrect");
+
+            return Ok(
+                new DataUserDto
+                {
+                    UserName = result.UserName,
+                    Token = _tokenServices.CreateToken(result)
+                }
+            );
+        }
+
+
+        
     }
 }

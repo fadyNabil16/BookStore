@@ -11,6 +11,9 @@ namespace api.Models
     [Table("Books")]
     public class Book
     {
+        [Key, ForeignKey("OrderItem")]
+        [ScaffoldColumn(false)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int BookId { get; set; }
         [Required]
         public string ISBN { get; set; }
@@ -28,5 +31,11 @@ namespace api.Models
         public double price { get; set; }
 
         public string? PhotoUri { get; set; } = null;
+
+        // Many to Many relation with Author
+        public List<BooksAuthorPool> BooksAuthorPool { get; set; } = new List<BooksAuthorPool>();
+    
+        // One to One with Item
+        public OrderItem? OrderItem { get; set; }
     }
 }

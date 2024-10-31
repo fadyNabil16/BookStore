@@ -18,11 +18,11 @@ export const RightSection: React.FC<RightSectionProps> = ({header, type}: RightS
   
           {/* =============================Form Inputs ==================== */}
           <form action="#" className="flex flex-col w-[100%]">
-            {/* =================Username Input================== */}
-            <div className={`${type === 'signin' ? 'hidden': ''} mt-6 lg:my-9`}>
-              <input className={`input`} type={`email`} placeholder="Email" />
-            </div>
             {/* =================Email Input================== */}
+            <div className={`${type === 'signin' ? 'hidden': ''} mt-6 lg:mt-9`}>
+              <input className="input" type={`email`} placeholder="Email" />
+            </div>
+            {/* =================Username Input================== */}
             <div className="my-6 lg:my-9">
               <input className="input" type="text" placeholder="Username" />
             </div>

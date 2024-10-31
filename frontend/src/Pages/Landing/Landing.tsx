@@ -1,13 +1,17 @@
 // type Props = {};
 
 import Header from "../../Components/Header/Header";
+import Hero from "../../Components/Hero/Hero";
 import Navbar from "../../Components/Navbar/Navbar";
 
 const Landing = () => {
   return (
-   <div className="h-[50rem] bg-bgc-1">
+   <div>
+      <div className="bg-bgc-4">
         <Navbar/>
         <Header/>
+      </div>
+      <Hero/>
    </div>
   );
 };

@@ -10,6 +10,8 @@ namespace api.Interfaces
 {
     public interface IBookRepository
     {
-       Task<Book> AddBookToStore(AddBookDto addBookDto);
+        Task<Book> AddBookToStore(AddBookDto addBookDto);
+        Task<Book> UpdateBookInStore();
+        Task<bool?> DeleteBookInStore(int bookId, bool autoForRunout);
     }
 }

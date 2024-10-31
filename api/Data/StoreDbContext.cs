@@ -20,6 +20,9 @@ namespace api.Data
         // Register Models
         public DbSet<User> Customers { get; set; }
         public DbSet<Book> Books { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<Author> Authors { get; set; }
         public DbSet<CustomersDiscount> CustomersDiscounts { get; set; }
         public DbSet<Discount> Discounts { get; set; }
 

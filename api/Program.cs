@@ -53,12 +53,14 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
 });
 
-builder.Services.AddDbContext<StoreDbContext>(options => {
+builder.Services.AddDbContext<StoreDbContext>(options =>
+{
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<ITockenServices, TokenServices>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
 
 builder.Services.AddIdentity<User, IdentityRole>(options =>

@@ -11,15 +11,15 @@ namespace api.Models
     public class OrderItem
     {
         [Key]
-        public int Id { get; set; }
+        public int OrderItemId { get; set; }
         public int Quantity { get; set; }
-
         // One Order to Many OrderItem
         [ForeignKey("Order")]
         public int OrderId { get; set; }
         public Order Order { get; set; }
 
-
-        public Book Book { get; set; }  
+        [ForeignKey("Book")]
+        public int BookId { get; set; }
+        public Book Book { get; set; }
     }
 }

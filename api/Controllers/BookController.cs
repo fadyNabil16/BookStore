@@ -26,7 +26,7 @@ namespace api.Controllers
             _bookRepo = bookRepo;
             _userManager = userManager;
         }
-        
+
         /* 
          *   Functionality To  Add New Books to Database
          *   Only Admin Can add Books
@@ -35,21 +35,41 @@ namespace api.Controllers
         [Authorize]
         public async Task<IActionResult> AddBookToStoreAsync([FromBody] AddBookDto addBookDto)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return BadRequest();
-            string email = User.FindFirstValue(ClaimTypes.Email);
-            if(!string.IsNullOrEmpty(email))
-            {
-                var user = await _userManager.FindByEmailAsync(email);
-                var role = await _userManager.GetRolesAsync(user);
-                if(!role.Contains("Admin"))
-                    return Unauthorized("Not an Admin");
-                var book = await _bookRepo.AddBookToStore(addBookDto);
-                return Ok();
-            }
-            return BadRequest("Not Good");
+            else if (!IsAdmin().Result)
+                return Unauthorized("Not an Admin");
+            var book = await _bookRepo.AddBookToStore(addBookDto);
+            return Ok();
+
         }
-    
-        
+
+        // Admin can book delete from database
+        [HttpDelete]
+        [Authorize]
+        public async Task<IActionResult> DeleteBook()
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+            else if (!IsAdmin().Result)
+                return Unauthorized("Not an Admin");
+
+            // Work start Here
+            return Ok();
+        }
+
+
+        // Private Method
+        private async Task<bool> IsAdmin()
+        {
+            string email = User.FindFirstValue(ClaimTypes.Email);
+            if (string.IsNullOrEmpty(email))
+            {
+                return false;
+            }
+            var user = await _userManager.FindByEmailAsync(email);
+            var role = await _userManager.GetRolesAsync(user);
+            return role.Contains("Admin");
+        }
     }
 }

@@ -25,5 +25,6 @@ namespace api.Models
         // For Many to ManY Relationship
         public List<CustomersDiscount> CustomerDiscount { get; set; } = new List<CustomersDiscount>();
 
+        public ICollection<Order> Orders { get; set; }
     }
 }

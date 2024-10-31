@@ -11,7 +11,7 @@ namespace api.Models
     [Table("Books")]
     public class Book
     {
-        [Key, ForeignKey("OrderItem")]
+        [Key]
         [ScaffoldColumn(false)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int BookId { get; set; }
@@ -23,9 +23,9 @@ namespace api.Models
 
         public DateTime? PublicationDate { get; set; } = null;
 
-        public int? Edition { get; set; } = null; 
+        public int? Edition { get; set; } = null;
         [Required]
-        [Range(0,200)]
+        [Range(0, 200)]
         public int AvailableQuantity { get; set; }
         [Required]
         public double price { get; set; }
@@ -34,8 +34,8 @@ namespace api.Models
 
         // Many to Many relation with Author
         public List<BooksAuthorPool> BooksAuthorPool { get; set; } = new List<BooksAuthorPool>();
-    
+
         // One to One with Item
-        public OrderItem? OrderItem { get; set; }
+        // public ICollection<OrderItem> OrderItem { get; set; }
     }
 }

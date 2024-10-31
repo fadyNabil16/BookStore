@@ -49,8 +49,7 @@ namespace api.Controllers
                 UserName = registerUserDto.UserName,
                 FirstName = registerUserDto.FirstName.ToLower(),
                 LastName =  registerUserDto.LastName.ToLower(),
-                PhoneNumber = registerUserDto.Phone,
-                
+                PhoneNumber = registerUserDto.Phone,       
                 City = "cairo"
             };
             var createduser = await _userManager.CreateAsync(_user, registerUserDto.Password);
@@ -91,7 +90,6 @@ namespace api.Controllers
                 }
             );
         }
-
 
         
     }

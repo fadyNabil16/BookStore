@@ -24,23 +24,23 @@ namespace api.Services
 
         public string CreateToken(User user)
         {
-            var claims = new List<Claim> {
+            List<Claim> claims = new List<Claim> {
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
                 new Claim(JwtRegisteredClaimNames.GivenName, user.UserName)
             };
 
-           var cred = new SigningCredentials(_key, SecurityAlgorithms.HmacSha256Signature);
+            SigningCredentials cred = new SigningCredentials(_key, SecurityAlgorithms.HmacSha256Signature);
 
-           var tokenDescriptor = new SecurityTokenDescriptor
-           {
+            SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
+            {
                 Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.Now.AddDays(7),
                 SigningCredentials = cred,
                 Issuer = _config["JWT:Issuer"],
                 Audience = _config["JWT:Audience"]
-           };
+            };
 
-           var tokenHandler = new JwtSecurityTokenHandler();
+            var tokenHandler = new JwtSecurityTokenHandler();
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
 

@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 
 interface NavListProps {
     navList: {[key:string] : string},
+    className?: string
 }
 
-export const NavList = ({navList}: NavListProps): React.ReactNode => {
+export const NavList = ({navList, className}: NavListProps): React.ReactNode => {
     
     const navigation = useNavigate();
     const listContect: string[] = ['Home', 'Shop', 'New Arriaves', "Blog", 'About us']
@@ -24,14 +25,14 @@ export const NavList = ({navList}: NavListProps): React.ReactNode => {
 
     
     return (
-        <div className="flex">
+        <div className={className && className}>
             <ul className={styles[1]}>
                {
                 listContect && listContect.map((item, idx) =>(
                     <li className={styles[2]} key={idx}>
                         <a
                             onClick={() => handleClick(idx, item)}
-                            className={`text-[14px] font-sans ${idx == active ? 'font-bold': ''}`}
+                            className={`${styles[3]} ${idx == active ? 'font-bold md:text-[1.06rem]': ''}`}
                         >{item}</a>
                     </li>
                 ))
@@ -43,6 +44,8 @@ export const NavList = ({navList}: NavListProps): React.ReactNode => {
 
 
 const styles = {
-    '1': 'flex items-center',
-    '2': 'text-[15px] mr-[1rem]',
+    1: 'flex items-center',
+    2: 'text-[1rem] mr-[1rem]',
+    3:`text-[0.85rem] lg:text-[1rem] xl:text-[1.1rem] font-sans`,
+
 }   

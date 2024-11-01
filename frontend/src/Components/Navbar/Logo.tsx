@@ -11,10 +11,9 @@ const Logo: React.FC<LogoProps> = ({_path, styles}) => {
     
 
     return (
-    <div className={`${styles ? "text-3": ""}`}>
+    <div className={`${styles && styles}`}>
         <button 
-        className="text-[1.8rem]"
-        onClick={handleNavigation}>
+            onClick={handleNavigation}>
             <span style={{fontFamily: 'magilio'}}>BookNest</span>
         </button>
     </div>

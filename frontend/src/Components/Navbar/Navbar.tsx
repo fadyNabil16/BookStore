@@ -1,63 +1,42 @@
 import Logo from "./Logo";
 import { NavList } from "./NavList";
-import { IoIosSearch } from "react-icons/io";
 import { IoCartOutline } from "react-icons/io5";
 import { CiHeart } from "react-icons/ci";
 import { CiUser } from "react-icons/ci";
 import { ReactNode } from "react";
+import SearchInput from "./Search";
 
-
-
-interface Props {
-
-}
+interface Props {}
 
 const Navbar = (props: Props) => {
-    
-    const pathsObj = {
-        home : '/home',
-        shop: '/shop',
-        arriaves: '/arriaves',
-        blog: '/blog',
-        aboutus: '/aboutus'
-    };
-
+  const pathsObj = {
+    home: "/home",
+    shop: "/shop",
+    arriaves: "/arriaves",
+    blog: "/blog",
+    aboutus: "/aboutus",
+  };
 
   return (
-    <div className={styles["1"]}>
-        <Logo _path={`/landing`} styles={`mr-6`}/>
-        <NavList navList={pathsObj}/>
-        <SearchInput/>
-        <div className="text-[1rem] flex justify-between">
-          <CiHeart className="mr-5"/>
-          <IoCartOutline  className="mr-5"/>
-          <CiUser  className="mr-5"/>
-        </div>
+    <div className={`${styles["1"]}`}>
+      <Logo _path={`/landing`} styles={styles[2]} />
+      <NavList navList={pathsObj} className={styles[3]} />
+      <SearchInput />
+      {/* =================Icons Part ================= */}
+      <div className={styles[4]}>
+        <CiHeart className="mr-5" />
+        <IoCartOutline className="mr-5" />
+        <CiUser className="mr-5" />
+      </div>
     </div>
   );
 };
 
-interface SearchInput {
-
-}
-const SearchInput: React.FC = () => {
-  return (
-    <div className="relative">
-      <input
-        className="input bg-txt-1/0 border-txt-3 w-auto py-[0.1rem] placeholder:text-txt-2"
-        type="text"
-        placeholder="Search"
-      />
-      <IoIosSearch className="absolute top-[25%] right-3 text-txt-" />
-    </div>
-  );
+const styles: { [key: number]: string } = {
+  1: "flex overflow-hidden items-center justify-between px-[3rem] py-[0.5rem] w-[100%] fixed bg-bgc-4/90 backdrop-blur-md",
+  2: "mr-5 text-[2.6rem] md:text-[2.4rem]",
+  3: "hidden md:block",
+  4: "hidden text-[1rem] md:flex justify-between",
 };
-
 
 export default Navbar;
-
-
-const styles = {
-    '1': "flex items-center justify-between px-[3rem] py-[0.5rem] w-[100%]",
-    '2': ""
-}

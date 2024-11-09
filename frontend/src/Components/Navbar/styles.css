@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .navlist-styles-1 {
+        @apply flex items-center
+    }
+    .navlist-styles-2 {
+        @apply text-[1rem] mr-[2rem]
+    }
+    .navlist-styles-3 {
+        @apply text-[0.85rem] lg:text-[1rem] xl:text-[1.1rem] font-sans
+    }
+}

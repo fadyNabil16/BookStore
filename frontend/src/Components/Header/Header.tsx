@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { images } from "./constants";
+import { style } from "../../types/styles";
 
 interface IHeader {
   className?: string | null;
@@ -29,13 +30,13 @@ const Header = ({ className }: IHeader): ReactNode => {
           <div className={styles[7]}>
             <img className={styles[8]} src={item.src} alt={item.alt} />
           </div>
-        ))}
+        ))} 
       </div>
     </div>
   );
 };
 
-const styles: { [key: number]: string } = {
+const styles: style = {
   1: "flex",
   2: "flex flex-col px-[3rem] min-w-[60%] pr-[6rem]",
   3: "h1 mt-[2rem] text-[2.6rem] font-normal leading-tight",

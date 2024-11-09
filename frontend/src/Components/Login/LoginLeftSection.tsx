@@ -1,16 +1,16 @@
 import React, { ReactNode } from "react";
+import { style } from "../../types/styles";
 
-
-interface LeftSectionProps  {
-    styles?: string | null,
-    children?: ReactNode
+interface LeftSectionProps {
+  styles?: string | null;
+  children?: ReactNode;
 }
 
-export const LeftSection: React.FC<LeftSectionProps> = ({styles, children}: LeftSectionProps) => {
+export const LeftSection = ({ styles, children }: LeftSectionProps) => {
   return (
-    <div className={`w-[43%] bg-bgc-1 ${styles ? styles : ''}`}>
+    <div className={`w-[43%] bg-bgc-1 ${styles ? styles : ""}`}>
       <div className="pl-[2rem] pt-[2rem]">
-        <p className="font-magilio text-[1.4rem] lg:text-[1.7rem] xl:text-[2.1rem]">Booknest</p>
+        <p className="font-magilio text-txt-2 text-[2rem]">Booknest</p>
       </div>
       <div className="font-bold h-[100%] flex flex-col pl-[2rem]">
         <div className="h-[28%]"></div>
@@ -21,3 +21,5 @@ export const LeftSection: React.FC<LeftSectionProps> = ({styles, children}: Left
     </div>
   );
 };
+
+const styles: style = {};

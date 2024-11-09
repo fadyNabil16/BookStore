@@ -1,4 +1,5 @@
 import book1 from "../../assets/book1.jpg";
+import { style } from "../../types/styles";
 import { images } from "../Header/constants";
 type Props = {};
 
@@ -24,7 +25,7 @@ const Hero = (props: Props) => {
 
 export default Hero;
 
-const styles: { [key: string]: string } = {
+const styles: style = {
   1: "flex flex-col w-full px-[3rem]",
   2: "flex justify-between items-center py-[3rem]",
   3: "h1 text-2xl text-bgc-2",

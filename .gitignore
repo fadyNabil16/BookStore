@@ -1,4 +1,5 @@
 .vscode
+.idea
 /api/BookStore.db
 /api/obj
 /api/properties

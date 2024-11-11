@@ -31,6 +31,8 @@ import Logo from "@/Components/Navbar/Logo";
 import { FaUsers } from "react-icons/fa";
 import CustomCarousel from "../carousel/carousel";
 import OrderSummary from "../Cart/OrderSummary";
+import { useAuth } from "@/Context/UserAuthContext.tsx";
+import { useNavigation } from "react-router-dom";
 
 type Props = {};
 const DrawerHeader = styled("div")(({ theme }) => ({
@@ -70,6 +72,7 @@ const SideBar = (): React.ReactNode => {
       icon: <FcPhone />,
     },
   ];
+
   function toggleDrawer(): void {
     setOpenDrawer(!openDrawer);
   }
@@ -134,6 +137,13 @@ const SideBar = (): React.ReactNode => {
 };
 
 const Navbar = (props: Props) => {
+  const { isLoggedIn } = useAuth();
+  const navigate = useNavigation();
+
+  function handleNavigationToLogin() {
+    navigate((location = "/login"));
+  }
+
   return (
     <AppBar position="static" color="#fff">
       <Container
@@ -170,11 +180,11 @@ const Navbar = (props: Props) => {
               </span>
             }
           />
-          <button>
-            <a href="#">
+          {!isLoggedIn ? (
+            <button onClick={handleNavigationToLogin}>
               <FaRegUserCircle className="text-2xl" />
-            </a>
-          </button>
+            </button>
+          ) : null}
         </div>
 
         {/* ================End Search =============== */}

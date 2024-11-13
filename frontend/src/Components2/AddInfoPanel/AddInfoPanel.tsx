@@ -21,7 +21,7 @@ const MenuProps = {
     },
   },
 };
-const BookCol: string[] = [
+const BookAttributes: string[] = [
   "ISBN",
   "Title",
   "PublicationDate",
@@ -38,7 +38,7 @@ const AddInfoPanel = () => {
   };
 
   return (
-    <div className={`container px-8`}>
+    <div className={`px-8`}>
       <div className={`flex flex-grow items-baseline`}>
         <FormControl
           sx={{
@@ -75,14 +75,15 @@ const AddInfoPanel = () => {
         </button>
       </div>
       <div className="book-form">
-        <label className={` label`}>ISBN</label>
-        <input className={`inp`} type={"text"} />
-        <label className={` label`}>ISBN</label>
-        <input className={`inp`} type={"text"} />
-        <label className={` label`}>ISBN</label>
-        <input className={`inp`} type={"text"} />
-        <label className={` label`}>ISBN</label>
-        <input className={`inp`} type={"text"} /
+        {
+          BookAttributes.map((attr, idx)=>(
+            <React.Fragment key={idx}>
+              <label className={` label`}>{attr}</label>
+              <input className={`inp`} type={attr !== "PublicationDate" ? "text": "date"} placeholder={attr}/>
+            </React.Fragment>
+          ))
+        }
+        
       </div>
     </div>
   );

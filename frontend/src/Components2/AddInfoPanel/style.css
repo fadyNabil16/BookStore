@@ -10,7 +10,7 @@
     }
 
     .label {
-        @apply text-[#15315a] col-span-12 md:col-span-2 md:self-center text-3xl font-bold italic;
+        @apply text-[#15315a] col-span-12 md:col-span-2 md:self-center text-lg font-bold italic;
     }
 
     .inp {

@@ -43,7 +43,7 @@ export const UserProvider = ({children}: Props) => {
     const registerUser = async (
         email: string,
         username: string,
-        password: string
+        password: string,
     ) => {
         await registerApi(email, username, password)
             .then((res) => {

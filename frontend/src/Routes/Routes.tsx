@@ -22,9 +22,12 @@ const router = createBrowserRouter([
             {path: "", element: <Landing/>},
             {path: "login/", element: <Login/>},
             {path: "admin/", element: <AdminPage/>},
-            {path: "info/", element: <AddInfoPanel/>}
         ],
-    }
+   },
+   {
+    path: "/info",
+    element: <AddInfoPanel/>
+   }
 ]);
 
 export default router;

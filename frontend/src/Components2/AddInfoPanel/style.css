@@ -6,16 +6,16 @@
 
 @layer components {
     .book-form {
-        @apply border border-[#000] py-12 px-10 grid grid-cols-12 gap-3 rounded-xl m-8 md:m-12
+        @apply border-[3px] border-[#e5e4e4] py-12 px-10 grid grid-cols-12 gap-3 rounded-xl m-8 md:m-12 gap-5
     }
 
     .label {
-        @apply col-span-12 md:col-span-2 md:self-center text-4xl font-bold italic;
+        @apply text-[#15315a] col-span-12 md:col-span-2 md:self-center text-3xl font-bold italic;
     }
 
     .inp {
         @apply col-span-12 md:col-span-10 border-[2.5px] border-[#b1b1b1] rounded-[0.35rem] h-[4rem]
         focus-within:bg-[#eef4ff] focus:outline-[#6fc1e4] focus:shadow-[2px_2px_4px_2px_#b3eded] focus-within:text-2xl focus-within:font-bold focus-within:text-[#7f7c7]
-        focus-within:px-3;
+        focus-within:px-3 shadow-lg;
     }
 }

@@ -2,10 +2,8 @@
 .idea
 /api/BookStore.db
 /api/obj
-/api/properties
 /api/bin
 /api/migrations
 
 /frontend/node_modules
 /frontend/Readme.md
-test.py

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using api.Interfaces;
 using api.Models;
 using Microsoft.AspNetCore.Authentication;
+// using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 
 namespace api.Services
@@ -22,11 +23,12 @@ namespace api.Services
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:SigningKey"]));
         }
 
-        public string CreateToken(User user)
+        public string CreateToken(User user, string role)
         {
             List<Claim> claims = new List<Claim> {
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                new Claim(JwtRegisteredClaimNames.GivenName, user.UserName)
+                new Claim(JwtRegisteredClaimNames.GivenName, user.UserName),
+                new Claim(ClaimTypes.Role, role, ClaimValueTypes.String)
             };
 
             SigningCredentials cred = new SigningCredentials(_key, SecurityAlgorithms.HmacSha256Signature);

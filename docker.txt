@@ -1,0 +1,81 @@
+# From node:version-alpine(linux distribution to work on it)
+# WORKDIR /app
+# COPY .(root dir) .(root dir of docker which is /app)
+# RUN npm install  (Run used in image installition time)
+#EXPOSE 4000 (port number exposed by a container not localhost app)
+# CMD ["node", "app.js"]  (used in run time cmd command)
+
+
+#BAsic docker commend line 
+#docker version
+# docker build -t(for tag) my-app(image name) .(relative path for docker file) ->Build an Image
+#docker images -> (show images)
+#docker run --name(options come here ex: container name)appc1 my_app(docker image name what we want to run)->(to run Docker image)
+# to stop running container open new terminal and follow the below steps
+#docker ps (show all running containers)
+#docker stop 1231231(container name we given or container id)
+#coming cmd using to create new container from existing image
+#docker run --name(options come here ex: container name)appc2 -p(publish) 4000:4000(map exposes port of container to app localhost) my_app(docker image name what we want to run)->(to run Docker image)
+#docker start using to start existing contaienr
+#docker start appc2(container name)
+
+# ====================================Layer Caching==============================#
+#image consist of layer every line in docker file add layer for image
+#if i change any hing in my code base should make new image
+#=================Caching ==========
+# From node:version-alpine(linux distribution to work on it)
+# WORKDIR /app
+# COPY /package.json .
+# RUN npm install  (Run used in image installition time)
+# COPY .(root dir) .(root dir of docker which is /app)
+#EXPOSE 4000 (port number exposed by a container not localhost app)
+# CMD ["node", "app.js"]  (used in run time cmd command)
+
+#====================================Manage Containers====================#
+#1- delete images
+#list all images >docker images
+#list all running contaienr using docker processes >docker ps
+#remove image and must be not in use in exists container or should first delete container
+#>docker image rm myapp(image Name) ...other images if exists
+#list all container first to remove container
+#>docker ps -a(all)
+#>docker container rm appc2(container name) ...other containers if exists
+
+#if you want to delete all images and containers and volumes use command
+#>docker system prune -a
+#that make flush to docker
+
+#==================================== Volumes ====================#
+#option --rm in run command remove container after finish
+#RUN npm install -g nodemon   to make it able to restart server every change
+#in run command use option -v(volume) (c:\\dev\api:/app -> mapping وهكذا)absPath image name
+# اي حاجه هتتغير في فولدر اي بي ااي هتمسع في الاب فولدر
+
+#=================================Docker Compose ==========================
+#like kubernetes yaml file
+#version: "3.8"  check version to use
+#services:
+    api:
+        build:./api  location of dockerfile
+        container_name: apic1
+        ports:
+            - "4000:4000"
+        volumes:
+            - "./api:\app" if we use command line not compose we use absolute path
+            - "/app/node_modules"  map to ghost folder using docker to ignore in volume and not change
+
+
+
+#to start compose file use docker-compose up to stop use down
+
+
+#to use with react app use that
+#version: "3.8"  check version to use
+#services:
+    api:
+        build:./api  location of dockerfile
+        container_name: apic1
+        ports:
+            - "4000:4000"
+        stdin_open: true
+        tty: true

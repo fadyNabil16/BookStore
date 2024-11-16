@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using api.Helpers;
 using api.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
@@ -54,17 +55,17 @@ namespace api.Data
             {
                 new IdentityRole
                 {
-                    Name = "Customer",
+                    Name = RolesContants.CUSTOMER,
                     NormalizedName= "CUSTOMER"
                 },
                 new IdentityRole
                 {
-                    Name= "Admin",
+                    Name= RolesContants.CUSTOMER,
                     NormalizedName= "ADMIN"
                 },
                 new IdentityRole
                 {
-                    Name = "Shipper",
+                    Name = RolesContants.SHIPPER,
                     NormalizedName = "SHIPPER"
                 }
             };

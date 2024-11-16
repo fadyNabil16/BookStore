@@ -1,4 +1,4 @@
-import {createBrowserRouter} from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import RegisterPage from "../Pages/Register/RegisterPage";
 import Landing from "../Pages/Landing/Landing";
@@ -13,21 +13,23 @@ import OrderSummary from "@/Components2/Cart/OrderSummary";
 import SectionPreview from "@/Components2/SectionPreview/SectionPreview";
 import AdminPage from "@/Pages/adminpage/AdminPage";
 import AddInfoPanel from "@/Components2/AddInfoPanel/AddInfoPanel.tsx";
+import Infopage from "@/Pages/InfoPage/Infopage";
 
 const router = createBrowserRouter([
-    {
-        path: "/",
-        element: <App/>,
-        children: [
-            {path: "", element: <Landing/>},
-            {path: "login/", element: <Login/>},
-            {path: "admin/", element: <AdminPage/>},
-        ],
-   },
-   {
+  {
+    path: "/",
+    element: <App />,
+    children: [
+      { path: "", element: <Landing /> },
+      { path: "login/", element: <Login /> },
+      { path: "admin/", element: <AdminPage /> },
+    ],
+  },
+  {
     path: "/info",
-    element: <AddInfoPanel/>
-   }
+    element: <Infopage />,
+    children: [{ path: "", element: <AddInfoPanel /> }],
+  },
 ]);
 
 export default router;

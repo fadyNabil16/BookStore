@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using api.Data;
 using api.DTOS;
+using api.Helpers;
 using api.Interfaces;
 using api.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -32,44 +33,35 @@ namespace api.Controllers
          *   Only Admin Can add Books
          */
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = RolesContants.ADMIN)]
         public async Task<IActionResult> AddBookToStoreAsync([FromBody] AddBookDto addBookDto)
         {
             if (!ModelState.IsValid)
-                return BadRequest();
-            else if (!IsAdmin().Result)
-                return Unauthorized("Not an Admin");
+                return BadRequest("Cant done that");
             var book = await _bookRepo.AddBookToStore(addBookDto);
-            return Ok();
-
+            return Ok(book);
         }
 
         // Admin can book delete from database
         [HttpDelete]
-        [Authorize]
+        [Authorize(Roles = RolesContants.ADMIN)]
         public async Task<IActionResult> DeleteBook()
         {
             if (!ModelState.IsValid)
                 return BadRequest();
-            else if (!IsAdmin().Result)
-                return Unauthorized("Not an Admin");
 
             // Work start Here
             return Ok();
         }
 
-
-        // Private Method
-        private async Task<bool> IsAdmin()
+        [HttpGet]
+        public async Task<IActionResult> GetBookSearch([FromQuery] BookQueryObject queryObject)
         {
-            string email = User.FindFirstValue(ClaimTypes.Email);
-            if (string.IsNullOrEmpty(email))
-            {
-                return false;
-            }
-            var user = await _userManager.FindByEmailAsync(email);
-            var role = await _userManager.GetRolesAsync(user);
-            return role.Contains("Admin");
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var book = await FindBookByParamAsync(BookQueryObject queryObject);
+            return Ok();
         }
     }
 }

@@ -10,6 +10,12 @@ import "./style.css";
 import Paper from "@mui/material/Paper";
 import TableBody from "@mui/material/TableBody";
 import { Grid } from "lucide-react";
+import { useDbManagement } from "@/Context/BookManipulationContext";
+import * as Yup from "yup";
+import { useForm } from "react-hook-form";
+import { BookInputForm } from "@/Models/Book";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { log } from "console";
 
 const Entites = ["Author", "Book", "Discounts"];
 const ITEM_HEIGHT = 48;
@@ -31,10 +37,40 @@ const BookAttributes: string[] = [
   "PhotoUri",
 ];
 
+const validation = Yup.object().shape({
+  ISBN: Yup.string().required("please enter isbn"),
+  Title: Yup.string().required("please enter title"),
+  PublicationDate: Yup.date().required("Okay man"),
+  Edition: Yup.string().required("please enter title"),
+  AvailableQuantity: Yup.string().required("please enter title"),
+  price: Yup.string().required("please enter title"),
+  PhotoUri: Yup.string().required("please enter"),
+});
+
 const AddInfoPanel = () => {
+  const { addBook } = useDbManagement();
   const [selected, setSelected] = useState<string>("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<BookInputForm>({ resolver: yupResolver(validation) });
   const handleChange = (event) => {
     setSelected(event.target.value);
+  };
+
+  const handleCock = (form: BookInputForm) => {
+    console.log(form);
+    addBook(
+      form.ISBN,
+      form.Title,
+      form.PublicationDate,
+      form.Edition,
+      form.AvailableQuantity,
+      form.price,
+      form.PhotoUri
+    );
+    console.log("finish");
   };
 
   return (
@@ -74,17 +110,20 @@ const AddInfoPanel = () => {
           Select
         </button>
       </div>
-      <div className="book-form">
-        {
-          BookAttributes.map((attr, idx)=>(
-            <React.Fragment key={idx}>
-              <label className={` label`}>{attr}</label>
-              <input className={`inp`} type={attr !== "PublicationDate" ? "text": "date"} placeholder={attr}/>
-            </React.Fragment>
-          ))
-        }
-        
-      </div>
+      <form onSubmit={handleSubmit(handleCock)} className="book-form">
+        {BookAttributes.map((attr, idx) => (
+          <React.Fragment key={idx}>
+            <label className={` label`}>{attr}</label>
+            <input
+              className={`inp`}
+              type={attr !== "PublicationDate" ? "text" : "date"}
+              placeholder={attr}
+              {...register(attr)}
+            />
+          </React.Fragment>
+        ))}
+        <button type="submit">Submit</button>
+      </form>
     </div>
   );
 };

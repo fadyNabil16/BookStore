@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.Data;
 using api.DTOS;
+using api.Helpers;
 using api.Interfaces;
 using api.Mapper.Books;
 using api.Models;
@@ -35,6 +36,12 @@ namespace api.Repositories
 
         }
 
+        public async Task<Book> FindBookByParamAsync(BookQueryObject queryObject)
+        {
+            var books = _context.Books.Include(b => b.ISBN).AsQueryable();
+
+        }
+
         // If I remove an Book from sore it will remove from all orders if admin remove
         // if automatic runs out it will not deleted in orders because it is delete for finish in store
         public async Task<bool?> DeleteBookInStore(int bookId, bool autoForRunout = true)
@@ -56,7 +63,7 @@ namespace api.Repositories
             return true;
         }
 
-        
+
 
         public Task<Book> UpdateBookInStore()
         {

@@ -36,15 +36,31 @@ namespace api.Repositories
 
         }
 
-        public async Task<Book> FindBookByParamAsync(BookQueryObject queryObject)
+        public async Task<IEnumerable<Book>?> FindBookByParamAsync(BookQueryObject queryObject)
         {
-            var books = _context.Books.Include(b => b.ISBN).AsQueryable();
+
+            try
+            {
+                IQueryable<Book> books = _context.Books.AsQueryable();
+                if (!string.IsNullOrWhiteSpace(queryObject.ISBN) || !string.IsNullOrWhiteSpace(queryObject.Title))
+                {
+                    books = books.Where(b => b.ISBN.Equals(queryObject.ISBN) || b.Title.ToLower().Contains(queryObject.Title.ToLower()));
+
+                    return await books.ToListAsync();
+                }
+                return null;
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
 
         }
 
         // If I remove an Book from sore it will remove from all orders if admin remove
         // if automatic runs out it will not deleted in orders because it is delete for finish in store
-        public async Task<bool?> DeleteBookInStore(int bookId, bool autoForRunout = true)
+        public async Task<bool?> RemoveBookAsync(int? bookId, bool autoForRunout = false)
         {
             var book = await _context.Books.FirstOrDefaultAsync(b => b.BookId == bookId);
             if (book == null) return null;

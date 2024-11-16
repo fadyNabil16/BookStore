@@ -12,9 +12,9 @@ namespace api.Interfaces
     public interface IBookRepository
     {
         Task<Book> AddBookToStore(AddBookDto addBookDto);
-        Task<Book> FindBookByParamAsync(BookQueryObject queryObject);
+        Task<IEnumerable<Book>?> FindBookByParamAsync(BookQueryObject queryObject);
         Task<Book> UpdateBookInStore();
-        Task<bool?> DeleteBookInStore(int bookId, bool autoForRunout);
+        Task<bool?> RemoveBookAsync(int? bookId, bool autoForRunout = false);
 
     }
 }

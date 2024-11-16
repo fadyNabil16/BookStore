@@ -11,6 +11,7 @@ using api.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace api.Controllers
 {
@@ -42,26 +43,43 @@ namespace api.Controllers
             return Ok(book);
         }
 
+        [HttpGet("search")]
+        public async Task<IActionResult> SearchBook([FromQuery] BookQueryObject queryObject)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var bookList = await _bookRepo.FindBookByParamAsync(queryObject);
+            if (bookList.Any() && bookList != null)
+            {
+                return Ok(bookList);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
         // Admin can book delete from database
         [HttpDelete]
+        [Route("{id:int}")]
         [Authorize(Roles = RolesContants.ADMIN)]
-        public async Task<IActionResult> DeleteBook()
+        public async Task<IActionResult> RemoveBook([FromRoute] int? id, bool runout, int? idFromRunOut)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
-
-            // Work start Here
-            return Ok();
+            bool? book = null;
+            if (id != null)
+            {
+                book = await _bookRepo.RemoveBookAsync(id);
+            }
+            else
+            {
+                book = await _bookRepo.RemoveBookAsync(idFromRunOut);
+            }
+            if (book == null) { return NotFound(); }
+            return NoContent();
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetBookSearch([FromQuery] BookQueryObject queryObject)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
-            var book = await FindBookByParamAsync(BookQueryObject queryObject);
-            return Ok();
-        }
     }
 }
